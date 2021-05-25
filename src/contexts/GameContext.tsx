@@ -1,11 +1,26 @@
-import { createContext } from 'react';
+import React, { createContext, useState } from 'react';
 
-export const GameContext = createContext('');
+interface ContextProps {
+  squares: Array<any>;
+  setSquares: Function;
+}
+
+export const GameContext = createContext<ContextProps>({
+  squares: [],
+  setSquares: Function,
+});
 
 type GameContextProps = {
   children: React.ReactNode;
 };
 
 export default function GameContextProvider({ children }: GameContextProps) {
-  return <GameContext.Provider value="teste">{children}</GameContext.Provider>;
+  const [squares, setSquares] = useState(Array().fill(null));
+
+  const state: ContextProps = {
+    squares,
+    setSquares,
+  };
+
+  return <GameContext.Provider value={state}>{children}</GameContext.Provider>;
 }
