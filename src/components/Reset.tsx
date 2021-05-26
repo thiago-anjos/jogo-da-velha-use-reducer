@@ -2,7 +2,19 @@ import { GameContext } from 'contexts/GameContext';
 import { useContext } from 'react';
 
 export default function Reset() {
-  const context = useContext(GameContext);
+  const { setSquares, setIsXNext, INIT_STATE_SQUARES, INIT_STATE_ISNEXT } =
+    useContext(GameContext);
 
-  return <h1>Board: {context.squares}</h1>;
+  function handleReset() {
+    setSquares(INIT_STATE_SQUARES);
+    setIsXNext(INIT_STATE_ISNEXT);
+  }
+
+  return (
+    <div className="reset">
+      <button type="button" onClick={handleReset}>
+        Recomeçar o jogo
+      </button>
+    </div>
+  );
 }
