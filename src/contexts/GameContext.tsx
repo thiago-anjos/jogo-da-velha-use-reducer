@@ -1,24 +1,26 @@
 import React, { createContext, useState } from 'react';
+import { ContextProps } from 'types/types';
 
 const INIT_STATE_SQUARES = Array(9).fill(null);
 const INIT_STATE_ISNEXT = true;
 
-interface ContextProps {
-  squares: Array<unknown>;
-  setSquares: Function;
-  isXNext: boolean;
-  setIsXNext: Function;
-  INIT_STATE_ISNEXT: boolean;
-  INIT_STATE_SQUARES: null[];
-}
-
 export const GameContext = createContext<ContextProps>({
-  squares: [],
+  squares: [''],
   setSquares: () => {},
   isXNext: false,
   setIsXNext: () => {},
   INIT_STATE_ISNEXT: false,
   INIT_STATE_SQUARES: INIT_STATE_SQUARES,
+  winner: '',
+  setWinner: () => {},
+  history: [
+    {
+      squares: INIT_STATE_SQUARES,
+      isXNext: false,
+      winner: '',
+    },
+  ],
+  setHistory: () => {},
 });
 
 type GameContextProps = {
@@ -28,6 +30,10 @@ type GameContextProps = {
 export default function GameContextProvider({ children }: GameContextProps) {
   const [squares, setSquares] = useState(INIT_STATE_SQUARES);
   const [isXNext, setIsXNext] = useState(INIT_STATE_ISNEXT);
+  const [history, setHistory] = useState([
+    { squares: INIT_STATE_SQUARES, isXNext: false, winner: '' },
+  ]);
+  const [winner, setWinner] = useState('');
 
   const state: ContextProps = {
     squares,
@@ -36,6 +42,10 @@ export default function GameContextProvider({ children }: GameContextProps) {
     setIsXNext,
     INIT_STATE_SQUARES,
     INIT_STATE_ISNEXT,
+    winner,
+    setWinner,
+    history,
+    setHistory,
   };
 
   return <GameContext.Provider value={state}>{children}</GameContext.Provider>;

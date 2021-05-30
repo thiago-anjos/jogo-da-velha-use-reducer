@@ -1,20 +1,27 @@
 import { GameContext } from 'contexts/GameContext';
 import { useContext } from 'react';
+import { SquareFunctionProps } from 'types/types';
 
-interface SquareProps {
-  value: any;
-  index: number;
-}
-
-export default function Square({ value, index }: SquareProps) {
-  const { squares, setSquares, isXNext, setIsXNext } = useContext(GameContext);
+export default function Square({ value, index }: SquareFunctionProps) {
+  const {
+    squares,
+    setSquares,
+    isXNext,
+    setIsXNext,
+    winner,
+    setHistory,
+    history,
+  } = useContext(GameContext);
 
   function handleClick() {
     if (squares[index]) return;
+    if (winner) return;
     const newSquares = [...squares];
     newSquares[index] = isXNext ? 'X' : 'O';
     setSquares(newSquares);
     setIsXNext(!isXNext);
+
+    setHistory([...history, { squares: squares, isXNext: !isXNext }]);
   }
 
   return (

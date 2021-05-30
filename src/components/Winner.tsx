@@ -2,7 +2,7 @@ import { GameContext } from 'contexts/GameContext';
 import { useContext } from 'react';
 
 export default function Winner() {
-  const context = useContext(GameContext);
-
-  return <h1>Board: {context.squares}</h1>;
+  const { winner } = useContext(GameContext);
+  if (!winner) return <></>;
+  return <p>{winner} ganhou!</p>;
 }
