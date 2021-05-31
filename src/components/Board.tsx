@@ -10,23 +10,21 @@ import { v4 as uuidv4 } from 'uuid';
 import calculateWinner from 'utils/calculateWinners';
 
 export default function Board() {
-  const { squares, setWinner, history } = useContext(GameContext);
-  useEffect(() => {
-    const winner = calculateWinner(squares);
-    winner ? setWinner(winner) : setWinner('');
-  }, [squares]);
+  const {
+    state: { squares },
+  } = useContext(GameContext);
 
   return (
     <div className="board-container">
-      <Player />
-      <Winner />
+      {/* <Player />
+      <Winner /> */}
       <div className="board">
         {squares.map((item, index) => (
           <Square value={item} index={index} key={index} />
         ))}
       </div>
-      <Reset />
-      <History />
+      {/* <Reset />
+      <History /> */}
     </div>
   );
 }

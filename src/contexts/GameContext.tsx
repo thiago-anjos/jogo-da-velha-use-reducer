@@ -1,26 +1,30 @@
-import React, { createContext, useState } from 'react';
-import { ContextProps } from 'types/types';
+import React, { createContext, useReducer } from 'react';
+import { ContextProps, State } from 'types/types';
+import reducer from './reducer';
 
 const INIT_STATE_SQUARES = Array(9).fill(null);
 const INIT_STATE_ISNEXT = true;
 
-export const GameContext = createContext<ContextProps>({
-  squares: [''],
-  setSquares: () => {},
-  isXNext: false,
-  setIsXNext: () => {},
-  INIT_STATE_ISNEXT: false,
-  INIT_STATE_SQUARES: INIT_STATE_SQUARES,
+// reducer
+const INITIAL_STATES = {
+  squares: INIT_STATE_SQUARES,
+  isXNext: INIT_STATE_ISNEXT,
   winner: '',
-  setWinner: () => {},
   history: [
     {
       squares: INIT_STATE_SQUARES,
-      isXNext: false,
+      isXNext: INIT_STATE_ISNEXT,
       winner: '',
     },
   ],
-  setHistory: () => {},
+};
+
+export const GameContext = createContext<{
+  state: State;
+  dispatch: React.Dispatch<any>;
+}>({
+  state: INITIAL_STATES,
+  dispatch: () => null,
 });
 
 type GameContextProps = {
@@ -28,25 +32,11 @@ type GameContextProps = {
 };
 
 export default function GameContextProvider({ children }: GameContextProps) {
-  const [squares, setSquares] = useState(INIT_STATE_SQUARES);
-  const [isXNext, setIsXNext] = useState(INIT_STATE_ISNEXT);
-  const [history, setHistory] = useState([
-    { squares: INIT_STATE_SQUARES, isXNext: false, winner: '' },
-  ]);
-  const [winner, setWinner] = useState('');
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATES);
 
-  const state: ContextProps = {
-    squares,
-    setSquares,
-    isXNext,
-    setIsXNext,
-    INIT_STATE_SQUARES,
-    INIT_STATE_ISNEXT,
-    winner,
-    setWinner,
-    history,
-    setHistory,
-  };
-
-  return <GameContext.Provider value={state}>{children}</GameContext.Provider>;
+  return (
+    <GameContext.Provider value={{ state, dispatch }}>
+      {children}
+    </GameContext.Provider>
+  );
 }

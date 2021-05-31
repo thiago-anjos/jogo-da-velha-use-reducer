@@ -4,13 +4,8 @@ import { SquareFunctionProps } from 'types/types';
 
 export default function Square({ value, index }: SquareFunctionProps) {
   const {
-    squares,
-    setSquares,
-    isXNext,
-    setIsXNext,
-    winner,
-    setHistory,
-    history,
+    state: { squares, isXNext, winner, history },
+    dispatch,
   } = useContext(GameContext);
 
   function handleClick() {
@@ -18,10 +13,13 @@ export default function Square({ value, index }: SquareFunctionProps) {
     if (winner) return;
     const newSquares = [...squares];
     newSquares[index] = isXNext ? 'X' : 'O';
-    setSquares(newSquares);
-    setIsXNext(!isXNext);
 
-    setHistory([...history, { squares: squares, isXNext: !isXNext }]);
+    dispatch({ type: 'teste', payload: newSquares });
+
+    // setSquares(newSquares);
+    // setIsXNext(!isXNext);
+
+    // setHistory([...history, { squares: squares, isXNext: !isXNext }]);
   }
 
   return (
