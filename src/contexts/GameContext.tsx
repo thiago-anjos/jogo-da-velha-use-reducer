@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react';
-import { ContextProps, State } from 'types/types';
+import { State } from 'types/types';
 import reducer from './reducer';
 
 const INIT_STATE_SQUARES = Array(9).fill(null);

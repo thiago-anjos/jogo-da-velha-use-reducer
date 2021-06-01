@@ -15,3 +15,8 @@ export interface SquareFunctionProps {
   value: string;
   index: number;
 }
+
+export interface Action {
+  type: string;
+  payload: {};
+}

@@ -12,12 +12,21 @@ import calculateWinner from 'utils/calculateWinners';
 export default function Board() {
   const {
     state: { squares },
+    dispatch,
   } = useContext(GameContext);
+
+  useEffect(() => {
+    if (!squares) return;
+    const winner = calculateWinner(squares);
+    if (winner) {
+      dispatch({ type: 'UPDATE_WINNER', payload: winner });
+    }
+  }, [dispatch, history, squares]);
 
   return (
     <div className="board-container">
-      {/* <Player />
-      <Winner /> */}
+      <Player />
+      <Winner />
       <div className="board">
         {squares.map((item, index) => (
           <Square value={item} index={index} key={index} />

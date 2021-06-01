@@ -14,12 +14,7 @@ export default function Square({ value, index }: SquareFunctionProps) {
     const newSquares = [...squares];
     newSquares[index] = isXNext ? 'X' : 'O';
 
-    dispatch({ type: 'teste', payload: newSquares });
-
-    // setSquares(newSquares);
-    // setIsXNext(!isXNext);
-
-    // setHistory([...history, { squares: squares, isXNext: !isXNext }]);
+    dispatch({ type: 'UPDATE_SQUARES', payload: newSquares });
   }
 
   return (
