@@ -1,21 +1,15 @@
 import { GameContext } from 'contexts/GameContext';
+import { ActionType } from 'contexts/reducer';
 import { useContext } from 'react';
 
 export default function History() {
-  const { history, setHistory, setSquares, setIsXNext, setWinner } =
-    useContext(GameContext);
+  const {
+    state: { history },
+    dispatch,
+  } = useContext(GameContext);
 
   const handleClick = (index: number) => {
-    const newHistory = [...history];
-
-    // para eliminar todos os historicos do index pra frente
-    newHistory.splice(index, Number.MAX_SAFE_INTEGER);
-
-    setHistory(newHistory);
-
-    setSquares(history[index].squares);
-    setIsXNext(history[index].isXNext);
-    setWinner(history[index].winner);
+    dispatch({ type: ActionType.UPDATE_HISTORY, payload: { history, index } });
   };
 
   return (

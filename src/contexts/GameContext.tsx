@@ -6,7 +6,7 @@ const INIT_STATE_SQUARES = Array(9).fill(null);
 const INIT_STATE_ISNEXT = true;
 
 // reducer
-const INITIAL_STATES = {
+export const INITIAL_STATES = {
   squares: INIT_STATE_SQUARES,
   isXNext: INIT_STATE_ISNEXT,
   winner: '',

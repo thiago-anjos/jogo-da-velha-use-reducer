@@ -8,6 +8,7 @@ import Reset from './Reset';
 import { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import calculateWinner from 'utils/calculateWinners';
+import { ActionType } from 'contexts/reducer';
 
 export default function Board() {
   const {
@@ -19,7 +20,7 @@ export default function Board() {
     if (!squares) return;
     const winner = calculateWinner(squares);
     if (winner) {
-      dispatch({ type: 'UPDATE_WINNER', payload: winner });
+      dispatch({ type: ActionType.UPDATE_WINNER, payload: winner });
     }
   }, [dispatch, history, squares]);
 
@@ -29,11 +30,11 @@ export default function Board() {
       <Winner />
       <div className="board">
         {squares.map((item, index) => (
-          <Square value={item} index={index} key={index} />
+          <Square value={item as string} index={index} key={index} />
         ))}
       </div>
-      {/* <Reset />
-      <History /> */}
+      <Reset />
+      <History />
     </div>
   );
 }

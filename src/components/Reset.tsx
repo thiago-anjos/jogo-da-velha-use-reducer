@@ -1,13 +1,12 @@
 import { GameContext } from 'contexts/GameContext';
+import { ActionType } from 'contexts/reducer';
 import { useContext } from 'react';
 
 export default function Reset() {
-  const { setSquares, setIsXNext, INIT_STATE_SQUARES, INIT_STATE_ISNEXT } =
-    useContext(GameContext);
+  const { dispatch } = useContext(GameContext);
 
   function handleReset() {
-    setSquares(INIT_STATE_SQUARES);
-    setIsXNext(INIT_STATE_ISNEXT);
+    dispatch({ type: ActionType.RESET });
   }
 
   return (
